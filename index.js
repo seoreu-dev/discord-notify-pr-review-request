@@ -9,17 +9,17 @@ const ENCODE_PAIR = {
 
 const encodeText = (text) => text.replace(/[<>]/g, (matched) => ENCODE_PAIR[matched]);
 
-const fetchUser = (url) =>
-  axios({
-    method: "get",
-    headers: {
-      Authorization: `token ${core.getInput("token")}`,
-    },
-    url,
-  }).then((res) => res.data);
+// const fetchUser = (url) =>
+//   axios({
+//     method: "get",
+//     headers: {
+//       Authorization: `token ${core.getInput("token")}`,
+//     },
+//     url,
+//   }).then((res) => res.data);
 
-const sendDiscord = ({ repoName, labels, title, url, email }) => {
-  const [name] = email.split("@");
+const sendDiscord = ({ repoName, labels, title, url, githubUserName }) => {
+  // const [name] = email.split("@");
 
   return axios({
     method: "post",
@@ -34,10 +34,10 @@ const sendDiscord = ({ repoName, labels, title, url, email }) => {
         {
           author: {
             name: `${name}`,
-            icon_url: `https://github.com/${name}.png?size=32`,
+            icon_url: `https://github.com/${githubUserName}.png?size=32`,
           },
           title: "새로운 리뷰 요청이 도착했어요! 😊",
-          description: `📬 @${name} 님 새로운 리뷰 요청이 도착했어요! 가능한 빠르게 리뷰에 참여해 주세요:`,
+          description: `📬 @${githubUserName} 님 새로운 리뷰 요청이 도착했어요! 가능한 빠르게 리뷰에 참여해 주세요:`,
           fields: [
             {
               name: `*${repoName}:*`,
@@ -72,18 +72,18 @@ const sendDiscord = ({ repoName, labels, title, url, email }) => {
     core.info(`'${sender.login}' requests a pr review for ${title}(${prUrl})`);
     core.info(`Fetching information about '${login}'...`);
 
-    const { email } = await fetchUser(url);
+    // const { email } = await fetchUser(url);
 
     core.info(`Sending a discord msg to '${login}'...`);
 
-    if (!email) {
-      core.warning(`Failed: '${login}' has no public email.`);
-      core.notice(`Failed: '${login}' has no public email.`);
+    // if (!email) {
+    //   core.warning(`Failed: '${login}' has no public email.`);
+    //   core.notice(`Failed: '${login}' has no public email.`);
 
-      return;
-    }
+    //   return;
+    // }
 
-    await sendDiscord({ repoName, labels, title, url: prUrl, email });
+    await sendDiscord({ repoName, labels, title, url: prUrl, login });
 
     core.info("Successfully sent");
     core.notice("Successfully sent");
