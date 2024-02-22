@@ -2,6 +2,8 @@
 
 Github Actions to notify discord when requesting PR review
 
+<img width="471" alt="image" src="https://github.com/captos/discord-notify-pr-review-request/assets/33483699/454adcac-e0c5-45c4-80e3-7ee163125d17">
+
 ## Usage
 
 1. Set a secret named 'DISCORD_WEBHOOK' for `Actions`.
