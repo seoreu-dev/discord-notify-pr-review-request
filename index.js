@@ -20,7 +20,7 @@ const fetchUser = (url) =>
     url,
   }).then((res) => res.data);
 const D0 = "D-0";
-const sendSlack = ({ repoName, labels, title, url, email }) => {
+const sendDiscord = ({ repoName, labels, title, url, email }) => {
   const [name] = email.split("@");
   const d0exists = labels.some((label) => label.name === D0);
 
@@ -61,11 +61,13 @@ const sendSlack = ({ repoName, labels, title, url, email }) => {
             //       ]
             //     : []),
             ...(d0exists
-              ? {
-                  name: `*🚨 \`${D0}\` PR로 매우 긴급한 PR입니다! 지금 바로 리뷰에 참여해 주세요! 🚨*`,
-                  value: "",
-                }
-              : {}),
+              ? [
+                  {
+                    name: `*🚨 \`${D0}\` PR로 매우 긴급한 PR입니다! 지금 바로 리뷰에 참여해 주세요! 🚨*`,
+                    value: "",
+                  },
+                ]
+              : []),
             {
               name: "",
               value:
@@ -96,7 +98,7 @@ const sendSlack = ({ repoName, labels, title, url, email }) => {
 
     const { email } = await fetchUser(url);
 
-    core.info(`Sending a slack msg to '${login}'...`);
+    core.info(`Sending a discord msg to '${login}'...`);
 
     if (!email) {
       core.warning(`Failed: '${login}' has no public email.`);
@@ -105,7 +107,7 @@ const sendSlack = ({ repoName, labels, title, url, email }) => {
       return;
     }
 
-    await sendSlack({ repoName, labels, title, url: prUrl, email });
+    await sendDiscord({ repoName, labels, title, url: prUrl, email });
 
     core.info("Successfully sent");
     core.notice("Successfully sent");
