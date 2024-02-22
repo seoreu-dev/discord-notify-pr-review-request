@@ -33,8 +33,8 @@ const sendDiscord = ({ repoName, labels, title, url, email }) => {
       embeds: [
         {
           author: {
-            name: `@${name}`,
-            iconURL: `https://github.com/${name}.png?size=32`,
+            name: `${name}`,
+            icon_url: `https://github.com/${name}.png?size=32`,
           },
           title: "새로운 리뷰 요청이 도착했어요! 😊",
           description: `📬 @${name} 님 새로운 리뷰 요청이 도착했어요! 가능한 빠르게 리뷰에 참여해 주세요:`,
