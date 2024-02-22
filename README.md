@@ -24,7 +24,7 @@ jobs:
     runs-on: [ubuntu-latest]
     steps:
       - name: discord-notify-pr-review-request
-        uses: captos/discord-notify-pr-review-request@v1.0.8
+        uses: captos/discord-notify-pr-review-request@v1.0.9
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           discordWebhookUrl: ${{ secrets.DISCORD_WEBHOOK }}

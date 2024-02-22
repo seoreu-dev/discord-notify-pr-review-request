@@ -18,7 +18,7 @@ const encodeText = (text) => text.replace(/[<>]/g, (matched) => ENCODE_PAIR[matc
 //     url,
 //   }).then((res) => res.data);
 
-const sendDiscord = ({ repoName, labels, title, url, githubUserName }) => {
+const sendDiscord = ({ repoName, labels, title, url, login }) => {
   // const [name] = email.split("@");
 
   return axios({
@@ -29,15 +29,15 @@ const sendDiscord = ({ repoName, labels, title, url, githubUserName }) => {
     url: `${core.getInput("discordWebhookUrl")}`,
     data: {
       username: "Github Actions[bot]",
-      content: `@${githubUserName}, 새로운 리뷰 요청이 도착했어요! 😊`,
+      content: `@${login}, 새로운 리뷰 요청이 도착했어요! 😊`,
       embeds: [
         {
           author: {
-            name: `${githubUserName}`,
-            icon_url: `https://github.com/${githubUserName}.png?size=32`,
+            name: `${login}`,
+            icon_url: `https://github.com/${login}.png?size=32`,
           },
           title: "새로운 리뷰 요청이 도착했어요! 😊",
-          description: `📬 @${githubUserName} 님 새로운 리뷰 요청이 도착했어요! 가능한 빠르게 리뷰에 참여해 주세요:`,
+          description: `📬 @${login} 님 새로운 리뷰 요청이 도착했어요! 가능한 빠르게 리뷰에 참여해 주세요:`,
           fields: [
             {
               name: `*${repoName}:*`,
