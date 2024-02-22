@@ -1,6 +1,3 @@
-// discord-notify-pr-review-request
-// Copyright (c) 2022-present Captos Co., Inc.
-
 const core = require("@actions/core");
 const github = require("@actions/github");
 const axios = require("axios");
@@ -9,8 +6,9 @@ const ENCODE_PAIR = {
   "<": "&lt;",
   ">": "&gt;",
 };
-const encodeText = (text) =>
-  text.replace(/[<>]/g, (matched) => ENCODE_PAIR[matched]);
+
+const encodeText = (text) => text.replace(/[<>]/g, (matched) => ENCODE_PAIR[matched]);
+
 const fetchUser = (url) =>
   axios({
     method: "get",
@@ -19,10 +17,9 @@ const fetchUser = (url) =>
     },
     url,
   }).then((res) => res.data);
-const D0 = "D-0";
+
 const sendDiscord = ({ repoName, labels, title, url, email }) => {
   const [name] = email.split("@");
-  const d0exists = labels.some((label) => label.name === D0);
 
   return axios({
     method: "post",
@@ -43,31 +40,8 @@ const sendDiscord = ({ repoName, labels, title, url, email }) => {
           fields: [
             {
               name: `*${repoName}:*`,
-              value: `<${url}|${encodeText(title)}>`,
+              value: `<${url}, ${encodeText(title)}>`,
             },
-            // ...(labels.length
-            //     ? [
-            //         {
-            //           type: "actions",
-            //           elements: labels.map(({ name }) => ({
-            //             type: "button",
-            //             text: {
-            //               type: "plain_text",
-            //               text: name,
-            //             },
-            //             ...(name === D0 ? { style: "danger" } : {}),
-            //           })),
-            //         },
-            //       ]
-            //     : []),
-            ...(d0exists
-              ? [
-                  {
-                    name: `*🚨 \`${D0}\` PR로 매우 긴급한 PR입니다! 지금 바로 리뷰에 참여해 주세요! 🚨*`,
-                    value: "",
-                  },
-                ]
-              : []),
             {
               name: "",
               value:
@@ -79,6 +53,7 @@ const sendDiscord = ({ repoName, labels, title, url, email }) => {
     },
   });
 };
+
 (async () => {
   try {
     const {
