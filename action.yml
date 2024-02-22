@@ -1,0 +1,15 @@
+name: 'discord-notify-pr-review-request'
+description: 'Notify PR review requests by sending a discord message'
+branding:
+  icon: "bell"
+  color: "blue"
+inputs:
+  token:
+    description: "GitHub token"
+    required: true
+  discordWebhookUrl:
+    description: "discord webhook url for messaging"
+    required: true
+runs:
+  using: 'node16'
+  main: 'index.js'
