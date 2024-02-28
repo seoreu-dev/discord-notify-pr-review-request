@@ -28,7 +28,6 @@ const sendDiscord = ({ repoName, labels, title, url, login }) => {
     },
     url: `${core.getInput("discordWebhookUrl")}`,
     data: {
-      username: "Github Actions[bot]",
       content: `@${login}, 새로운 리뷰 요청이 도착했어요! 😊`,
       embeds: [
         {
