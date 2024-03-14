@@ -82,7 +82,7 @@ const sendDiscord = ({ repoName, labels, title, url, login }) => {
     //   return;
     // }
 
-    await sendDiscord({ repoName, labels, title, url: prUrl, login });
+    await sendDiscord({ repoName, labels, title, url: prUrl, login: login });
 
     core.info("Successfully sent");
     core.notice("Successfully sent");
